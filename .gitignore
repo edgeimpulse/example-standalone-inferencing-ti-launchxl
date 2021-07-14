@@ -1,0 +1,23 @@
+# Directories / symlinks
+build/
+.vscode/
+edge-impulse-sdk
+edge-impulse-sdk/
+firmware-sdk
+firmware-sdk/
+model-parameters
+tflite-model
+
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
