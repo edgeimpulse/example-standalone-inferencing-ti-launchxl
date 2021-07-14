@@ -21,3 +21,9 @@ tflite-model
 *.ilk
 *.map
 *.exp
+
+# TI config files
+ti_devices_config.c
+ti_drivers_config.c
+ti_drivers_config.h
+ti_utils_build_linker.cmd.genlibs
