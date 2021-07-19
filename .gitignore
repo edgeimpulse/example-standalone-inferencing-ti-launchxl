@@ -1,8 +1,8 @@
 # Directories / symlinks
 build/
 .vscode/
-edge-impulse-sdk
-edge-impulse-sdk/
+# edge-impulse-sdk
+# edge-impulse-sdk/
 firmware-sdk
 firmware-sdk/
 model-parameters
