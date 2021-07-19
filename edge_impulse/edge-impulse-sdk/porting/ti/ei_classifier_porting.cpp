@@ -31,6 +31,7 @@
 #include "unistd.h"
 
 extern "C" void Serial_Out(char *string, int length);
+extern "C" uint64_t Timer_getMs(void);
 
 __attribute__((weak)) EI_IMPULSE_ERROR ei_run_impulse_check_canceled() {
     return EI_IMPULSE_OK;
@@ -48,24 +49,13 @@ __attribute__((weak)) EI_IMPULSE_ERROR ei_sleep(int32_t time_ms) {
 
 uint64_t ei_read_timer_ms() {
 
-    uint64_t time_ms;
-    // uint32_t seconds, nano_seconds;
-
-    // spresense_time_cb(&seconds, &nano_seconds);
-
-    // time_ms = (seconds * 1000) + (nano_seconds / 1000000);
-    return time_ms;
+    return Timer_getMs();
 }
 
 uint64_t ei_read_timer_us() {
 
-    uint64_t time_us;
-    // uint32_t seconds, nano_seconds;
-
-    // spresense_time_cb(&seconds, &nano_seconds);
-
-    // time_us = (seconds * 1000000) + (nano_seconds / 1000);
-    return time_us;
+    /* TI board hangs when trying to call callback function each micro second */
+    return 0;
 }
 
 __attribute__((weak)) void ei_printf(const char *format, ...) {

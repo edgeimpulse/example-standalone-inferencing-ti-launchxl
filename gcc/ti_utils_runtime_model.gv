@@ -30,9 +30,18 @@ digraph Model
 
     // mod.$name=/ti/drivers/RTOS
 
+    // mod.$name=/ti/drivers/Timer
+    CONFIG_TIMER_0 -> ti_drivers_Power
+    CONFIG_TIMER_0 -> ti_drivers_Board
+    CONFIG_TIMER_0 -> CONFIG_GPTIMER_0
+
     // mod.$name=/ti/drivers/UART
     CONFIG_UART_0 -> ti_drivers_Power
     CONFIG_UART_0 -> ti_drivers_Board
     CONFIG_UART_0 -> CONFIG_PIN_1
     CONFIG_UART_0 -> CONFIG_PIN_2
+
+    // mod.$name=/ti/drivers/timer/GPTimerCC26XX
+    CONFIG_GPTIMER_0 -> ti_drivers_Power
+    CONFIG_GPTIMER_0 -> ti_drivers_Board
 }

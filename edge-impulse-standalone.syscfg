@@ -50,3 +50,9 @@ var UART = scripting.addModule("/ti/drivers/UART");
 var uart = UART.addInstance();
 uart.$hardware = system.deviceData.board.components.XDS110UART;
 uart.$name = "CONFIG_UART_0";
+
+/* ======== Timer ======== */
+var Timer = scripting.addModule("/ti/drivers/Timer");
+var timer = Timer.addInstance();
+timer.timerType = "32 Bits";
+timer.$name = "CONFIG_TIMER_0";

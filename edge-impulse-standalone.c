@@ -37,6 +37,7 @@
 /* Driver Header files */
 #include <ti/drivers/GPIO.h>
 #include <ti/drivers/UART.h>
+#include "ti/drivers/Timer.h"
 #include <stdlib.h>
 #include <stdio.h>
 /* Driver configuration */
@@ -45,8 +46,13 @@
 /* Extern CPP functions ---------------------------------------------------- */
 extern int ei_main();
 
+/* Forward declerations ---------------------------------------------------- */
+static int init_timer(void);
+
 /* Private variables ------------------------------------------------------- */
 static UART_Handle uart;
+static uint64_t timer_count = 0;
+
 
 /*
  *  ======== mainThread ========
@@ -77,14 +83,78 @@ void *mainThread(void *arg0)
     }
 
     /* Turn on user LED to indicate successful initialization */
-    GPIO_write(CONFIG_GPIO_LED_0, CONFIG_GPIO_LED_ON);    
-    
+    GPIO_write(CONFIG_GPIO_LED_0, CONFIG_GPIO_LED_ON);
+
+    if(init_timer()) {
+        UART_write(uart, "Timer init error", 16);
+    }
+
     ei_main();
 
     return NULL;
 }
 
+/**
+ * @brief Write data to the serial output
+ *
+ * @param string
+ * @param length
+ */
 void Serial_Out(char *string, int length)
 {
     UART_write(uart, string, length);
+}
+
+/**
+ * @brief Get current time in ms
+ *
+ * @return uint64_t
+ */
+uint64_t Timer_getMs(void)
+{
+    return timer_count;
+}
+
+/**
+ * @brief Called by timer interrupt
+ *
+ * @param myHandle
+ * @param status
+ */
+static void timer_Callback(Timer_Handle myHandle, int_fast16_t status)
+{
+    timer_count++;
+}
+
+/**
+ * @brief Setup and start timer
+ *
+ * @return Error if unequal to 0
+ */
+static int init_timer(void)
+{
+    Timer_Handle timer_handle;
+    Timer_Params timer_params;
+
+    Timer_init();
+
+    /* Create a timer that fire's the callback every 1000 microseconds */
+    Timer_Params_init(&timer_params);
+    timer_params.period = 1000;
+    timer_params.periodUnits = Timer_PERIOD_US;
+    timer_params.timerMode = Timer_CONTINUOUS_CALLBACK;
+    timer_params.timerCallback = timer_Callback;
+
+    timer_handle = Timer_open(CONFIG_TIMER_0, &timer_params);
+
+    if(timer_handle == NULL) {
+        return -1;
+    }
+
+    if(Timer_start(timer_handle) == Timer_STATUS_ERROR) {
+        return -2;
+    }
+    else {
+        return 0;
+    }
 }
