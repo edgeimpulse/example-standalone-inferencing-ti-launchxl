@@ -7,3 +7,47 @@ Builds and runs an exported impulse locally (Texas Instruments LaunchXL
 - Uses the TI Simplelink SDK `simplelink_cc13x2_26x2_sdk_5_10_00_48`
 - SDK directory should be next to project directory
 - If this is not desired change `SIMPLELINK_CC13X2_26X2_SDK_INSTALL_DIR`
+
+## Building the application
+
+1. Build the application by calling `make` as follows:
+
+    ```
+    $ cd gcc
+    $ make
+    ```
+1. Connect the board to your computer using USB.
+1. Flash the board
+
+    ```
+    $ dslite.sh flash -c tools/user_files/configs/cc1352p1f3.ccxml -l tools/user_files/settings/generated.ufsettings -e -f -v gcc/build/edge-impulse-standalone.out
+    ```
+
+    *Note*: the above expects [UniFlash](https://www.ti.com/tool/UNIFLASH#downloads) is installed and `PATH` is set up properly to find `dslite.sh`.
+
+### Or build with Docker
+
+1. Build the Docker image:
+    ```
+    $ docker build -t ti-build .
+    ```
+1. Build the application by running the container as follows:
+
+    **Windows**
+
+    ```
+    $ docker run --rm -it -v "%cd%":/app ti-build /bin/bash -c "cd gcc && make"
+    ```
+
+    **Linux, macOS**
+
+    ```
+    $ docker run --rm -it -v $PWD:/app:delegated ti-build /bin/bash -c "cd gcc && make"
+    ```
+
+1. Connect the board to your computer using USB.
+1. Flash the board:
+
+    ```
+    $ dslite.sh flash -c tools/user_files/configs/cc1352p1f3.ccxml -l tools/user_files/settings/generated.ufsettings -e -f -v gcc/build/edge-impulse-standalone.out
+    ```
