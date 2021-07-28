@@ -19,6 +19,14 @@ Builds and runs an exported impulse locally (Texas Instruments LaunchXL)
 1. Connect the board to your computer using USB.
 1. Flash the board
 
+    **Windows**
+
+    ```
+    $ dslite.bat flash -c tools\user_files\configs\cc1352p1f3.ccxml -l tools\user_files\settings\generated.ufsettings -e -f -v gcc\build\edge-impulse-standalone.out
+    ```
+
+    **Linux, macOS**
+
     ```
     $ dslite.sh flash -c tools/user_files/configs/cc1352p1f3.ccxml -l tools/user_files/settings/generated.ufsettings -e -f -v gcc/build/edge-impulse-standalone.out
     ```
