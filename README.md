@@ -22,13 +22,13 @@ Builds and runs an exported impulse locally (Texas Instruments LaunchXL)
     **Windows**
 
     ```
-    $ dslite.bat flash -c tools\user_files\configs\cc1352p1f3.ccxml -l tools\user_files\settings\generated.ufsettings -e -f -v gcc\build\edge-impulse-standalone.out
+    $ dslite.bat -c tools\user_files\configs\cc1352p1f3.ccxml -l tools\user_files\settings\generated.ufsettings -e -f -v gcc\build\edge-impulse-standalone.out
     ```
 
     **Linux, macOS**
 
     ```
-    $ dslite.sh flash -c tools/user_files/configs/cc1352p1f3.ccxml -l tools/user_files/settings/generated.ufsettings -e -f -v gcc/build/edge-impulse-standalone.out
+    $ dslite.sh -c tools/user_files/configs/cc1352p1f3.ccxml -l tools/user_files/settings/generated.ufsettings -e -f -v gcc/build/edge-impulse-standalone.out
     ```
 
     *Note*: the above expects [UniFlash](https://www.ti.com/tool/UNIFLASH#downloads) is installed and `PATH` is set up properly to find `dslite.sh`.
@@ -57,5 +57,19 @@ Builds and runs an exported impulse locally (Texas Instruments LaunchXL)
 1. Flash the board:
 
     ```
-    $ dslite.sh flash -c tools/user_files/configs/cc1352p1f3.ccxml -l tools/user_files/settings/generated.ufsettings -e -f -v gcc/build/edge-impulse-standalone.out
+    $ dslite.sh -c tools/user_files/configs/cc1352p1f3.ccxml -l tools/user_files/settings/generated.ufsettings -e -f -v gcc/build/edge-impulse-standalone.out
     ```
+
+## Troubleshooting
+
+**fatal: IcePick_C: Error initializing emulator: (Error -260 @ 0x0)**
+
+If during flashing you encounter the above titled issue. Then..
+
+Ensure:
+
+1. your device is properly connected and/or your cable is not damaged. 
+2. you have the proper permissions to access the USB device.
+
+If on Linux you may want to try copying `tools/71-ti-permissions.rules` to `/etc/udev/rules.d/`. Then re-attach the USB cable and try again.
+
