@@ -22,7 +22,7 @@
             
                   <property Type="choicelist" Value="1" id="Debug Probe Selection">
   <choice Name="Select by serial number" value="0">
-    <property Type="stringfield" Value="L42003NX" id="-- Enter the serial number"/>
+    <property Type="stringfield" Value="" id="-- Enter the serial number"/>
   </choice>
 </property>
             
