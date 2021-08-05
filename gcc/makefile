@@ -15,7 +15,7 @@ OBJECTS = $(NAME).obj $(BUILD)/ti_devices_config.obj $(BUILD)/ti_drivers_config.
 # Application flags
 APPFLAGS += \
 	-DEI_SENSOR_AQ_STREAM=FILE \
-	-DEI_PORTING_SONY_SPRESENSE=1 \
+	-DEI_PORTING_TI=1 \
 	-DEIDSP_USE_CMSIS_DSP \
 	-DEIDSP_QUANTIZE_FILTERBANK=0 \
 	-DEI_CLASSIFIER_TFLITE_ENABLE_CMSIS_NN \
@@ -37,6 +37,7 @@ CFLAGS = -I.. \
     -ffunction-sections \
     -fdata-sections \
     -g \
+	-Os \
     -gstrict-dwarf \
     -Wall \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include/newlib-nano" \
@@ -48,7 +49,10 @@ CXXFLAGS += $(CFLAGS) \
 	-std=gnu++11 \
 	-fno-rtti \
 	-fno-use-cxa-atexit \
-	-fno-inline-functions
+	-fno-inline-functions \
+    -ffunction-sections \
+    -fdata-sections \
+	-Os \
 
 LIBSTDC = "${shell "$(CC)" $(CFLAGS) -print-file-name=libstdc++.a}"
 
@@ -71,6 +75,7 @@ LFLAGS = -Wl,-T,../gcc/cc13x2_cc26x2_nortos.lds \
     -lc \
     -lm \
     -lnosys \
+	-Os \
 	$(LIBSTDC) \
     --specs=nano.specs -u _printf_float
 
