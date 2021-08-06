@@ -62,13 +62,13 @@ Builds and runs an exported impulse locally (Texas Instruments LaunchXL)
 
 ## Troubleshooting
 
-**fatal: IcePick_C: Error initializing emulator: (Error -260 @ 0x0)**
+**Flashing**
 
-If during flashing you encounter the above titled issue. Then..
+If during flashing you encounter flashing issue. Then..
 
 Ensure:
 
-1. your device is properly connected and/or your cable is not damaged. 
+1. your device is properly connected and/or your cable is not damaged.
 2. you have the proper permissions to access the USB device.
 
 If on Linux you may want to try copying `tools/71-ti-permissions.rules` to `/etc/udev/rules.d/`. Then re-attach the USB cable and try again.
