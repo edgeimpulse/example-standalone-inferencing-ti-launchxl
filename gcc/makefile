@@ -37,22 +37,18 @@ CFLAGS = -I.. \
     -ffunction-sections \
     -fdata-sections \
     -g \
-	-Os \
     -gstrict-dwarf \
     -Wall \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include/newlib-nano" \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include" \
-	-DEI_PORTING_TI=1 \
 	$(APPFLAGS) \
+    -O3 \
 
 CXXFLAGS += $(CFLAGS) \
 	-std=gnu++11 \
 	-fno-rtti \
 	-fno-use-cxa-atexit \
 	-fno-inline-functions \
-    -ffunction-sections \
-    -fdata-sections \
-	-Os \
 
 LIBSTDC = "${shell "$(CC)" $(CFLAGS) -print-file-name=libstdc++.a}"
 
