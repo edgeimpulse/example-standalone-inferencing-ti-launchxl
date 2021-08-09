@@ -1,6 +1,6 @@
 # example-standalone-inferencing-ti-launchxl
-Builds and runs an exported impulse locally (Texas Instruments LaunchXL)
 
+This repository runs an exported impulse on the Texas Instruments LAUNCHXL-CC1352P1 development board. See the documentation at [Running your impulse locally (TI CC1352P LaunchPad)](https://docs.edgeimpulse.com/docs/running-your-impulse-ti-launchxl).
 
 ## Texas Instruments Simplelink SDK
 
