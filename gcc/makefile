@@ -41,14 +41,14 @@ CFLAGS = -I.. \
     -Wall \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include/newlib-nano" \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include" \
-	-DEI_PORTING_TI=1 \
 	$(APPFLAGS) \
+    -O3 \
 
 CXXFLAGS += $(CFLAGS) \
 	-std=gnu++11 \
 	-fno-rtti \
 	-fno-use-cxa-atexit \
-	-fno-inline-functions
+	-fno-inline-functions \
 
 LIBSTDC = "${shell "$(CC)" $(CFLAGS) -print-file-name=libstdc++.a}"
 
@@ -71,6 +71,7 @@ LFLAGS = -Wl,-T,../gcc/cc13x2_cc26x2_nortos.lds \
     -lc \
     -lm \
     -lnosys \
+	-Os \
 	$(LIBSTDC) \
     --specs=nano.specs -u _printf_float
 

@@ -1,12 +1,11 @@
 # example-standalone-inferencing-ti-launchxl
-Builds and runs an exported impulse locally (Texas Instruments LaunchXL)
 
+This repository runs an exported impulse on the Texas Instruments LAUNCHXL-CC1352P1 development board. See the documentation at [Running your impulse locally (TI CC1352P LaunchPad)](https://docs.edgeimpulse.com/docs/running-your-impulse-ti-launchxl).
 
 ## Texas Instruments Simplelink SDK
 
 - Uses the TI Simplelink SDK `simplelink_cc13x2_26x2_sdk_5.20.00.52`
-- SDK directory should be next to project directory
-- If this is not desired change `SIMPLELINK_CC13X2_26X2_SDK_INSTALL_DIR`
+- Set `SIMPLELINK_CC13X2_26X2_SDK_INSTALL_DIR` in `gcc\makefile` to the path to TI SimpleLink SDK.
 
 ## Building the application
 
@@ -62,13 +61,13 @@ Builds and runs an exported impulse locally (Texas Instruments LaunchXL)
 
 ## Troubleshooting
 
-**fatal: IcePick_C: Error initializing emulator: (Error -260 @ 0x0)**
+**Flashing**
 
-If during flashing you encounter the above titled issue. Then..
+If during flashing you encounter flashing issue. Then..
 
 Ensure:
 
-1. your device is properly connected and/or your cable is not damaged. 
+1. your device is properly connected and/or your cable is not damaged.
 2. you have the proper permissions to access the USB device.
 
 If on Linux you may want to try copying `tools/71-ti-permissions.rules` to `/etc/udev/rules.d/`. Then re-attach the USB cable and try again.

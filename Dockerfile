@@ -22,7 +22,7 @@ ENV PATH="/opt/gcc/gcc-arm-none-eabi-9-2019-q4-major/bin:${PATH}"
 # SimpleLink SDK
 RUN mkdir -p /opt/ti && \
     cd /opt/ti && \
-    wget https://downloads.ti.com/downloads/simplelink/esd/simplelink_cc13x2_26x2_sdk/5.20.00.52/simplelink_cc13x2_26x2_sdk_5_20_00_52.run?__gda__=1627853268_8f0293b96eae5389c29c175d1646bd1d -O simplelink.run && \
+    wget https://cdn.edgeimpulse.com/build-system/simplelink_cc13x2_26x2_sdk_5_20_00_52.run -O simplelink.run && \
     chmod u+x simplelink.run && \
     ./simplelink.run --mode unattended --prefix /opt/ti && \
     rm -rf simplelink.run

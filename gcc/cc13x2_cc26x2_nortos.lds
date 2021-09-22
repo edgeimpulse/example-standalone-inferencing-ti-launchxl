@@ -30,8 +30,10 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-STACKSIZE = 1024;
-HEAPSIZE = 16384; /* Size of heap buffer used by HeapMem */
+ STACKSIZE = 1024;
+ /* HEAPSIZE is dynamic; Size of heap buffer used by HeapMem */
+ SRAM_END = 0x20014000;
+ SRAM_START = 0x20000000;
 
 MEMORY
 {
@@ -41,7 +43,8 @@ MEMORY
      * flash, 40 bytes
      */
     FLASH_CCFG (RX) : ORIGIN = 0x00057fa8, LENGTH = 0x00000058
-    SRAM (RWX)      : ORIGIN = 0x20000000, LENGTH = 0x00014000
+    SRAM (RWX)      : ORIGIN = SRAM_START, LENGTH = (SRAM_END - STACKSIZE - SRAM_START)
+    STACK (RWX)     : ORIGIN = (SRAM_END - STACKSIZE), LENGTH = STACKSIZE
     GPRAM (RWX)     : ORIGIN = 0x11000000, LENGTH = 0x00002000
     /* Explicitly placed off target for the storage of logging data.
      * The data placed here is NOT loaded onto the target device.
@@ -55,7 +58,7 @@ MEMORY
 REGION_ALIAS("REGION_TEXT", FLASH);
 REGION_ALIAS("REGION_BSS", SRAM);
 REGION_ALIAS("REGION_DATA", SRAM);
-REGION_ALIAS("REGION_STACK", SRAM);
+REGION_ALIAS("REGION_STACK", STACK);
 REGION_ALIAS("REGION_HEAP", SRAM);
 REGION_ALIAS("REGION_LOG", LOG_DATA);
 REGION_ALIAS("REGION_ARM_EXIDX", FLASH);
@@ -240,19 +243,26 @@ SECTIONS {
         end = __heap_start__;
         _end = end;
         __end = end;
-        . = . + HEAPSIZE;
-        KEEP(*(.heap))
+        KEEP(*(.heap));
+        _a_heap_start = .;
+        . = ORIGIN (STACK);
         __heap_end__ = .;
-        __HeapLimit = __heap_end__;
+        __HeapLimit__ = __heap_end__;
+        HEAPSIZE = __heap_end__ - _a_heap_start;
+
+        ASSERT ((_a_heap_start <= __heap_end__), "HEAP region overflowed!");
     } > REGION_HEAP AT> REGION_HEAP
 
     .stack (NOLOAD) : ALIGN(0x8) {
-        _stack = .;
+        _stack  = .;
         __stack = .;
-        KEEP(*(.stack))
-        . += STACKSIZE;
+        KEEP(*(.stack));
+        _a_stack_end = .;
+        . = ORIGIN (STACK) + LENGTH (STACK);
         _stack_end = .;
-        __stack_end = .;
+        __stack_end = _stack_end;
+
+        ASSERT ((_a_stack_end <= _stack_end), "STACK region overflowed!");
     } > REGION_STACK AT> REGION_STACK
 
     .log_data (COPY) : {
